@@ -5,7 +5,7 @@ var browserSync = require('browser-sync').create();
 var eslint = require('gulp-eslint');
 var jasmine = require('gulp-jasmine-phantom');
 
-gulp.task('default', ["styles", "lint"], function() {
+gulp.task('default', ['styles', 'lint'], function() {
 	gulp.watch('sass/**/*.scss', ['styles']);
 	gulp.watch('js/**/*.js', ['lint']);
 
