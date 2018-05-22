@@ -4,20 +4,35 @@ var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync').create();
 var eslint = require('gulp-eslint');
 var jasmine = require('gulp-jasmine-phantom');
+var concat = require('gulp-concat');
 
 gulp.task('default', ['copy-html', 'copy-images', 'styles', 'lint'], function() {
 	gulp.watch('sass/**/*.scss', ['styles']);
 	gulp.watch('js/**/*.js', ['lint']);
 	gulp.watch('./index.html', ['copy-html']);
+	gulp.watch('./index.html').on('change', browserSync.reload);
+
 
 	browserSync.init({
 		server: './dist'
 	});
 });
 
+gulp.task('scripts', function() {
+	gulp.src('js/**/*.js')
+		.pipe(concat('all.js'))
+		.pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('scripts-dist', function() {
+	gulp.src('js/**/*.js')
+		.pipe(concat('all.js'))
+		.pipe(gulp.dest('dist/js'));
+});
+
 gulp.task('styles', function() {
 	gulp.src('sass/**/*.scss')
-		.pipe(sass().on('error', sass.logError))
+		.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions']
 		}))
