@@ -5,6 +5,7 @@ var browserSync = require('browser-sync').create();
 var eslint = require('gulp-eslint');
 var jasmine = require('gulp-jasmine-phantom');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 
 gulp.task('default', ['copy-html', 'copy-images', 'styles', 'lint'], function() {
 	gulp.watch('sass/**/*.scss', ['styles']);
@@ -18,6 +19,14 @@ gulp.task('default', ['copy-html', 'copy-images', 'styles', 'lint'], function() 
 	});
 });
 
+gulp.task('dist', [
+	'copy-html',
+	'copy-images',
+	'styles',
+	'lint',
+	'scripts-dist'
+]);
+
 gulp.task('scripts', function() {
 	gulp.src('js/**/*.js')
 		.pipe(concat('all.js'))
@@ -27,6 +36,7 @@ gulp.task('scripts', function() {
 gulp.task('scripts-dist', function() {
 	gulp.src('js/**/*.js')
 		.pipe(concat('all.js'))
+		.pipe(uglify())
 		.pipe(gulp.dest('dist/js'));
 });
 
