@@ -20,7 +20,7 @@ gulp.task('styles', function() {
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions']
 		}))
-		.pipe(gulp.dest('./css'));
+		.pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('lint', function () {
