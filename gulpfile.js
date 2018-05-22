@@ -57,9 +57,9 @@ gulp.task('tests', function () {
 
 // Static server
 gulp.task('browser-sync', function() {
-    browserSync.init({
-        server: {
-            baseDir: "./"
-        }
-    });
+	browserSync.init({
+		server: {
+			baseDir: './'
+		}
+	});
 });
