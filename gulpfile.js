@@ -5,12 +5,13 @@ var browserSync = require('browser-sync').create();
 var eslint = require('gulp-eslint');
 var jasmine = require('gulp-jasmine-phantom');
 
-gulp.task('default', ['styles', 'lint'], function() {
+gulp.task('default', ['copy-html', 'copy-images', 'styles', 'lint'], function() {
 	gulp.watch('sass/**/*.scss', ['styles']);
 	gulp.watch('js/**/*.js', ['lint']);
+	gulp.watch('./index.html', ['copy-html']);
 
 	browserSync.init({
-		server: './'
+		server: './dist'
 	});
 });
 
@@ -21,6 +22,16 @@ gulp.task('styles', function() {
 			browsers: ['last 2 versions']
 		}))
 		.pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('copy-html', function() {
+	gulp.src('./index.html')
+		.pipe(gulp.dest('./dist'));
+});
+
+gulp.task('copy-images', function() {
+	gulp.src('img/*')
+		.pipe(gulp.dest('./dist/img'));
 });
 
 gulp.task('lint', function () {
